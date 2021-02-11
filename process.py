@@ -43,6 +43,9 @@ def CreateParquet(path, schema_path, partition, output_path):
             new_df[i[0]] = new_df[i[0]].astype(str)
             new_df[i[0]] = new_df[i[0]].str.strip()
         if (i[1][0:7] == 'decimal'):
+            value_decimal = new_df[i[0]].tolist()
+            decimal = [0 if x.strip() == '' else x for x in value_decimal]
+            new_df[i[0]] = decimal
             new_df[i[0]] =  new_df[i[0]].astype(np.float64)
         if (i[1] == 'date'):
             new_df[i[0]] = new_df[i[0]].astype(str)
@@ -51,8 +54,14 @@ def CreateParquet(path, schema_path, partition, output_path):
         if (i[1] == 'timestamp'):
             new_df[i[0]] =  pd.to_datetime(new_df[i[0]], format='%Y-%m-%d %H:%M:%S')
         if (i[1] == 'integer'):
+            value_integer = new_df[i[0]].tolist()
+            integer = [0 if x.strip() == '' else x for x in value_integer]
+            new_df[i[0]] = integer
             new_df[i[0]] =  new_df[i[0]].astype(np.int32)
         if (i[1] == 'long'):
+            value_long = new_df[i[0]].tolist()
+            longg = [0 if x.strip() == '' else x for x in value_long]
+            new_df[i[0]] = longg
             new_df[i[0]] =  new_df[i[0]].astype(np.int64)
 
             
